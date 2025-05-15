@@ -1,58 +1,100 @@
-Descrição:
-  Esta branch adiciona um fluxo completo de onboarding ao aplicativo Flutter, incluindo:
-    -Splash Screen customizada;
-    -Página de Onboarding com carrossel de três passos;
-    -Gerenciamento de temas (claro/escuro);
-    -Persistência de estado para pular onboarding após o primeiro uso;
-    Após o onboarding, o usuário é direcionado para a tela de login.
+# Auth App - Atividade 04: Flutter Login
 
-Funcionalidades:
-  -Splash Screen: Tela inicial com logo e background customizados, usando flutter_native_splash;
-  -Onboarding: Carrossel de três etapas com animações Lottie e texto explicativo;
-  -Persistência: Uso de shared_preferences para armazenar flag de primeira execução;
-  -Temas Dinâmicos: Alternância entre tema claro e escuro via ThemeController;
-  -Login: Campo de entrada confeccionado com widgets personalizados.
+**Aplicativo Flutter que simula o fluxo de autenticação de um app real, com Splash Screen, Onboarding, Login e suporte a temas claros e escuros.**
 
-Pacotes Utilizados:
-  Pacote                            Descrição
-  -flutter_native_splash   ---->    Gera automaticamente as configurações de splash para Android/iOS.
-  -lottie                  ---->    Referencia e reproduz animações JSON criadas no After Effects.
-  -shared_preferences      ---->    Persiste dados simples (flag de "já visualizado onboarding").
-  -provider                ---->    Gerencia estado (tema e progresso de onboarding).
-  -flutter_svg             ---->    Renderiza imagens SVG nos cards de onboarding.
+---
 
-Fluxo do Aplicativo:
-  1.Splash Screen (lib/splash_page.dart)
-    -Exibe imagem e background customizados definidos em flutter_native_splash;
-    -Aguarda 2 segundos ou até preload de assets, então verifica a flag em SharedPreferences;
-    -Se for primeira execução, navega para OnboardingPage; caso contrário, vai direto ao login.
-  2.Onboarding (lib/onboarding_page.dart)
-    -Carrega assets/onboarding.json, que contém 3 itens (OnboardItem);
-    -Exibe cada passo em um PageView: Imagem (PNG ou SVG), título e descrição, indicadores de página e botão “Próximo” / “Começar” no último passo;
-    -Ao concluir, salva flag em SharedPreferences e direciona para LoginPage.
-  3.Login (lib/login_page.dart)
-    -Formulário simples com campos customizados (login_text_field.dart);
-    -Botão de login sem integração real (template para futuras implementações).
+## 📋 Funcionalidades
 
-Estrutura de pastas:
-    ├── assets/
-    │   ├── images/              # PNGs e SVGs do onboarding
-    │   └── onboarding.json      # Dados do fluxo de onboarding
-    ├── lib/
-    │   ├── controllers/
-    │   │   └── theme_controller.dart
-    │   ├── models/
-    │   │   └── onboard_item.dart
-    │   ├── widgets/
-    │   │   ├── info_card.dart
-    │   │   └── login_text_field.dart
-    │   ├── splash_page.dart
-    │   ├── onboarding_page.dart
-    │   ├── login_page.dart
-    │   ├── dark_theme.dart
-    │   ├── light_theme.dart
-    │   └── main.dart
-    ├── android/                  # Configurações Android (inclui launch_background.xml)
-    ├── ios/                      # Configurações iOS
-    ├── pubspec.yaml              # Declaração de dependências e assets
-    └── README.md
+* **Splash Screen Nativa:** configurada com `flutter_native_splash`, aparece antes da inicialização Flutter.
+* **Splash Animada:** logo entra com fade-in via `AnimationController` e depois redireciona ao Onboarding.
+* **Onboarding Dinâmico:** mínimo de 3 telas carregadas de `assets/onboarding.json` usando `PageView`.
+* **Tela de Login Funcional:** campos de e-mail e senha com validação, botões “Entrar”, “Registrar-se” e “Esqueci minha senha”.
+* **Temas:** light e dark (`light_theme.dart` / `dark_theme.dart`), alternados em tempo real via `ThemeController` e `ValueNotifier`.
+* **Widgets Customizados:**
+
+  * `LoginTextFormField` (campo de texto com validação e estilo)
+  * `InfoCard` (card reutilizável para renderizar informações dinâmicas a partir de `assets/cards.json`).
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+auth_app/
+├─ assets/
+│  ├─ images/
+│  │  └─ logo.png, step1.png, step2.png, step3.png
+│  ├─ onboarding.json
+│  └─ cards.json
+├─ lib/
+│  ├─ controllers/
+│  │  └─ theme_controller.dart
+│  ├─ models/
+│  │  └─ onboard_item.dart
+│  ├─ themes/
+│  │  ├─ light_theme.dart
+│  │  └─ dark_theme.dart
+│  ├─ widgets/
+│  │  ├─ login_text_field.dart
+│  │  └─ info_card.dart
+│  ├─ splash_page.dart
+│  ├─ onboarding_page.dart
+│  ├─ login_page.dart
+│  └─ main.dart
+└─ pubspec.yaml
+```
+
+---
+
+## 🚀 Como Executar
+
+1. **Instale as dependências:**
+
+   ```bash
+   flutter pub get
+   ```
+2. **Gere a Splash nativa:**
+
+   ```bash
+   flutter pub run flutter_native_splash:create
+   ```
+3. **Execute o app:**
+
+   ```bash
+   flutter run
+   ```
+4. **Hot Reload / Restart:**
+
+   * `r` → hot reload
+   * `R` → hot restart
+
+---
+
+## 🌿 Branch de Desenvolvimento
+
+Criamos a branch `feature/add-onboarding-assets` para isolar a inclusão de assets e configuração de Onboarding:
+
+```bash
+git checkout -b feature/add-onboarding-assets
+# adicionar assets e pubspec.yaml
+git commit -m "feat(onboarding): include onboarding JSON and step images"
+git push -u origin feature/add-onboarding-assets
+```
+
+---
+
+## 🛠️ Dependências Principais
+
+* `flutter_native_splash` para splash nativa.
+* `cupertino_icons` para ícones básicos.
+
+---
+
+## 📚 Recursos e Referências
+
+* [unDraw](https://undraw.co) – ilustrações gratuitas para onboarding.
+* Flutter docs – animações, temas e assets.
+
+---
+
