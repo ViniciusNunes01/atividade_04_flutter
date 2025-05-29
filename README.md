@@ -5,6 +5,8 @@
 ---
 ## 📋 Integrantes:
 - Kauan Lopes
+- Matheus Castilho 
+- Vinícius Nunes 
 
 ## 📋 Funcionalidades
 
