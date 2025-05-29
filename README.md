@@ -3,6 +3,8 @@
 **Aplicativo Flutter que simula o fluxo de autenticação de um app real, com Splash Screen, Onboarding, Login e suporte a temas claros e escuros.**
 
 ---
+## 📋 Integrantes:
+- Kauan Lopes
 
 ## 📋 Funcionalidades
 
