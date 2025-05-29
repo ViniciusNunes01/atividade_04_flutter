@@ -1,3 +1,5 @@
+import 'package:atividade_login/forgot_password_page.dart';
+import 'package:atividade_login/register_page.dart';
 import 'package:flutter/material.dart';
 import 'controllers/theme_controller.dart';
 import 'themes/light_theme.dart';
@@ -26,10 +28,12 @@ class MyApp extends StatelessWidget {
           themeMode: mode,
           initialRoute: '/',
           routes: {
-            '/': (_) => const SplashPage(),
+            '/':         (_) => const SplashPage(),
             '/onboarding': (_) => const OnboardingPage(),
-            '/login': (_) => const LoginPage(),
-            // '/register', '/forgot', '/home'...
+            '/login':     (_) => const LoginPage(),
+            '/register':  (_) => RegisterPage(),
+            '/forgot':    (_) => ForgotPasswordPage(),
+            // '/home': ...
           },
         );
       },

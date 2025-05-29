@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.2.7
+  sqflite: ^2.0.0+4
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +27,7 @@ flutter:
   assets:
     - assets/onboarding.json
     - assets/images/
+    - assets/sql/schema.sql
 
 flutter_native_splash:
   color: "#ffffff"
