@@ -12,7 +12,7 @@ class AuthService {
         'password': password, // em produção, use hash!
       });
       return true;
-    } on DatabaseException catch (e) {
+    } on DatabaseException {
       // Se violar UNIQUE (e-mail já cadastrado)
       return false;
     }

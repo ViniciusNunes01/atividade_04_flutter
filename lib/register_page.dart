@@ -61,6 +61,25 @@ class RegisterPage extends StatelessWidget {
                 },
                 child: const Text('Registrar'),
               ),
+              const SizedBox(height: 16),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(color: Colors.black),
+                  children: [
+                    const TextSpan(text: 'Ao criar sua conta, você concorda com os '),
+                    TextSpan(
+                      text: 'Termos',
+                      style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                    const TextSpan(text: ' & '),
+                    TextSpan(
+                      text: 'Condições',
+                      style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

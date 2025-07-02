@@ -38,24 +38,33 @@ class _OnboardingPageState extends State<OnboardingPage> {
         itemCount: items!.length,
         itemBuilder: (context, index) {
           final it = items![index];
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(it.image, height: 200),
-              const SizedBox(height: 20),
-              Text(it.title, style: Theme.of(context).textTheme.headlineSmall),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(it.desc, textAlign: TextAlign.center),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(it.image, height: 200),
+                  const SizedBox(height: 20),
+                  Text(it.title, style: Theme.of(context).textTheme.headlineSmall),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(it.desc, textAlign: TextAlign.center),
+                  ),
+                  const SizedBox(height: 24),
+                  if (index == items!.length - 1)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green, // cor verde para o botão
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: const Text('Começar'),
+                    ),
+                ],
               ),
-              if (index == items!.length - 1)
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  child: const Text('Começar'),
-                ),
-            ],
+            ),
           );
         },
       ),
