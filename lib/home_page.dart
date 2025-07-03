@@ -26,11 +26,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _mostrarAdicionarAnotacao() {
     showModalBottomSheet(
+      isScrollControlled: true, // para o teclado não cortar o modal
       context: context,
       builder: (BuildContext context) {
         TextEditingController controller = TextEditingController();
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 16,
+            right: 16,
+            top: 16,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -63,11 +69,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _mostrarAdicionarDisciplina() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         TextEditingController controller = TextEditingController();
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 16,
+            right: 16,
+            top: 16,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -95,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -134,7 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: const Icon(Icons.logout),
               title: const Text('Sair'),
               onTap: () {
-                // Navega para a tela de login e remove a rota atual
                 Navigator.pushReplacementNamed(context, '/login');
               },
             ),
@@ -159,54 +171,56 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body:
-          _disciplinaSelecionada != null
-              ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Anotações para ${_disciplinaSelecionada!}:'),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount:
-                          _disciplinasComAnotacoes[_disciplinaSelecionada!]!
-                              .length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            _disciplinasComAnotacoes[_disciplinaSelecionada!]![index],
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              setState(() {
-                                _disciplinasComAnotacoes[_disciplinaSelecionada!]!
-                                    .removeAt(index);
-                              });
-                            },
-                          ),
-                        );
-                      },
+      body: SafeArea(
+        child: _disciplinaSelecionada != null
+            ? Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Anotações para ${_disciplinaSelecionada!}:',
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_disciplinaSelecionada != null) {
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: _disciplinasComAnotacoes[_disciplinaSelecionada!]!.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              _disciplinasComAnotacoes[_disciplinaSelecionada!]![index],
+                            ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                setState(() {
+                                  _disciplinasComAnotacoes[_disciplinaSelecionada!]!.removeAt(index);
+                                });
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
                         setState(() {
-                          _disciplinasComAnotacoes[_disciplinaSelecionada]!
-                              .clear();
+                          _disciplinasComAnotacoes[_disciplinaSelecionada!]!.clear();
                         });
-                      }
-                    },
-                    child: const Text('Remover todas as anotações'),
-                  ),
-                ],
+                      },
+                      child: const Text('Remover todas as anotações'),
+                    ),
+                  ],
+                ),
               )
-              : const Center(
+            : const Center(
                 child: Text(
                   'Selecione uma disciplina no menu.',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (_disciplinaSelecionada != null) {
