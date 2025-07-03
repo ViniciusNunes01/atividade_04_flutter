@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _mostrarAdicionarAnotacao() {
     showModalBottomSheet(
-      isScrollControlled: true, // para o teclado não cortar o modal
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         TextEditingController controller = TextEditingController();
@@ -104,6 +104,17 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  double _calcularProgresso() {
+    int totalDisciplinas = _disciplinasComAnotacoes.length;
+    int totalAnotacoes =
+        _disciplinasComAnotacoes.values.fold(0, (sum, list) => sum + list.length);
+
+    double progressoDisciplinas = (totalDisciplinas / 5).clamp(0.0, 1.0);
+    double progressoAnotacoes = (totalAnotacoes / 10).clamp(0.0, 1.0);
+
+    return ((progressoDisciplinas + progressoAnotacoes) / 2).clamp(0.0, 1.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,14 +189,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text(
+                      'Progresso de Engajamento:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 6),
+                    LinearProgressIndicator(
+                      value: _calcularProgresso(),
+                      minHeight: 10,
+                      backgroundColor: Colors.grey[300],
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.green),
+                    ),
+                    const SizedBox(height: 20),
                     Text(
                       'Anotações para ${_disciplinaSelecionada!}:',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: _disciplinasComAnotacoes[_disciplinaSelecionada!]!.length,
+                        itemCount:
+                            _disciplinasComAnotacoes[_disciplinaSelecionada!]!
+                                .length,
                         itemBuilder: (context, index) {
                           return ListTile(
                             title: Text(
@@ -195,7 +222,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               icon: const Icon(Icons.delete),
                               onPressed: () {
                                 setState(() {
-                                  _disciplinasComAnotacoes[_disciplinaSelecionada!]!.removeAt(index);
+                                  _disciplinasComAnotacoes[_disciplinaSelecionada!]!
+                                      .removeAt(index);
                                 });
                               },
                             ),
@@ -206,7 +234,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          _disciplinasComAnotacoes[_disciplinaSelecionada!]!.clear();
+                          _disciplinasComAnotacoes[_disciplinaSelecionada!]!
+                              .clear();
                         });
                       },
                       child: const Text('Remover todas as anotações'),
