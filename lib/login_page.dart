@@ -19,9 +19,8 @@ class LoginPage extends StatelessWidget {
             icon: const Icon(Icons.brightness_6),
             onPressed: () {
               final n = ThemeController.notifier;
-              n.value = n.value == ThemeMode.light
-                  ? ThemeMode.dark
-                  : ThemeMode.light;
+              n.value =
+                  n.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
             },
           ),
         ],
@@ -35,20 +34,26 @@ class LoginPage extends StatelessWidget {
               LoginTextFormField(
                 hint: 'E-mail',
                 ctrl: emailCtrl,
-                validator: (v) => v != null && v.contains('@') ? null : 'E-mail inválido',
+                validator:
+                    (v) =>
+                        v != null && v.contains('@') ? null : 'E-mail inválido',
               ),
               const SizedBox(height: 12),
               LoginTextFormField(
                 hint: 'Senha',
                 ctrl: passCtrl,
                 obscure: true,
-                validator: (v) => v != null && v.length >= 6 ? null : 'Mínimo 6 caracteres',
+                validator:
+                    (v) =>
+                        v != null && v.length >= 6
+                            ? null
+                            : 'Mínimo 6 caracteres',
               ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // TODO: autenticação
+                    Navigator.pushReplacementNamed(context, '/home');
                   }
                 },
                 child: const Text('Entrar'),

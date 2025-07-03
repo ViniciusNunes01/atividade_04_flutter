@@ -129,6 +129,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Sair'),
+              onTap: () {
+                // Navega para a tela de login e remove a rota atual
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
           ],
         ),
       ),
@@ -150,54 +159,63 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: _disciplinaSelecionada != null
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Anotações para ${_disciplinaSelecionada!}:'),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _disciplinasComAnotacoes[_disciplinaSelecionada!]!.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_disciplinasComAnotacoes[_disciplinaSelecionada!]![index]),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              _disciplinasComAnotacoes[_disciplinaSelecionada!]!.removeAt(index);
-                            });
-                          },
-                        ),
-                      );
-                    },
+      body:
+          _disciplinaSelecionada != null
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Anotações para ${_disciplinaSelecionada!}:'),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount:
+                          _disciplinasComAnotacoes[_disciplinaSelecionada!]!
+                              .length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                            _disciplinasComAnotacoes[_disciplinaSelecionada!]![index],
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              setState(() {
+                                _disciplinasComAnotacoes[_disciplinaSelecionada!]!
+                                    .removeAt(index);
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_disciplinaSelecionada != null) {
+                        setState(() {
+                          _disciplinasComAnotacoes[_disciplinaSelecionada]!
+                              .clear();
+                        });
+                      }
+                    },
+                    child: const Text('Remover todas as anotações'),
+                  ),
+                ],
+              )
+              : const Center(
+                child: Text(
+                  'Selecione uma disciplina no menu.',
+                  style: TextStyle(fontSize: 16),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_disciplinaSelecionada != null) {
-                      setState(() {
-                        _disciplinasComAnotacoes[_disciplinaSelecionada]!.clear();
-                      });
-                    }
-                  },
-                  child: const Text('Remover todas as anotações'),
-                ),
-              ],
-            )
-          : const Center(
-              child: Text(
-                'Selecione uma disciplina no menu.',
-                style: TextStyle(fontSize: 16),
               ),
-            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (_disciplinaSelecionada != null) {
             _mostrarAdicionarAnotacao();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Selecione uma disciplina primeiro!')),
+              const SnackBar(
+                content: Text('Selecione uma disciplina primeiro!'),
+              ),
             );
           }
         },
