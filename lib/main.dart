@@ -1,7 +1,7 @@
 import 'package:atividade_login/forgot_password_page.dart';
 import 'package:atividade_login/register_page.dart';
 import 'package:flutter/material.dart';
-import 'controllers/theme_controller.dart';
+import 'themes/theme_controller.dart';
 import 'themes/light_theme.dart';
 import 'themes/dark_theme.dart';
 import 'splash_page.dart';

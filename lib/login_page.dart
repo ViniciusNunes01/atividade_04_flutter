@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:atividade_login/services/auth_service.dart'; // Importa o serviço de autenticação
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -127,11 +128,27 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: () {
+                    // LÓGICA DE LOGIN CORRIGIDA
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        // A lógica de autenticação com o banco de dados
-                        // precisa ser implementada aqui.
-                        Navigator.pushReplacementNamed(context, '/home');
+                        final authService = AuthService();
+                        final isLoggedIn = await authService.login(
+                          _emailCtrl.text,
+                          _passCtrl.text,
+                        );
+
+                        if (!context.mounted) return;
+
+                        if (isLoggedIn) {
+                          Navigator.pushReplacementNamed(context, '/home');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('E-mail ou senha inválidos.'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       }
                     },
                     child: const Text(

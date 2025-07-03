@@ -18,6 +18,7 @@ class DatabaseHelper {
   Future<Database> _initDB(String fileName) async {
     Directory docs = await getApplicationDocumentsDirectory();
     final path = join(docs.path, fileName);
+    print("O banco de dados está em: $path");
     return await openDatabase(
       path,
       version: 1,
