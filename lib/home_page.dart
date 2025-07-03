@@ -201,6 +201,43 @@ class _MyHomePageState extends State<MyHomePage> {
             ..._disciplinasComAnotacoes.keys.map(
               (disciplina) => ListTile(
                 title: Text(disciplina),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  tooltip: 'Apagar disciplina',
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: const Text('Confirmar exclusão'),
+                            content: Text(
+                              'Deseja apagar a disciplina "$disciplina"? Todas as anotações também serão removidas.',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _disciplinasComAnotacoes.remove(disciplina);
+                                    if (_disciplinaSelecionada == disciplina) {
+                                      _disciplinaSelecionada = null;
+                                    }
+                                  });
+                                  Navigator.pop(context); // fecha o diálogo
+                                },
+                                child: const Text(
+                                  'Apagar',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          ),
+                    );
+                  },
+                ),
                 onTap: () {
                   setState(() {
                     _disciplinaSelecionada = disciplina;
