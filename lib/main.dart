@@ -7,6 +7,7 @@ import 'themes/dark_theme.dart';
 import 'splash_page.dart';
 import 'onboarding_page.dart';
 import 'login_page.dart';
+import 'home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             '/login':     (_) => const LoginPage(),
             '/register':  (_) => RegisterPage(),
             '/forgot':    (_) => ForgotPasswordPage(),
-            // '/home': ...
+            '/home': (_) => const MyHomePage(title: 'App de notas'),
           },
         );
       },
