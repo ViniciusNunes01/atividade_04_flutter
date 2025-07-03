@@ -264,7 +264,20 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Row(
               children: [
-                Text(widget.title),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _disciplinaSelecionada = null;
+                    });
+                  },
+                  child: Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
                 const SizedBox(width: 16),
                 ElevatedButton(
                   onPressed: _mostrarAdicionarDisciplina,
