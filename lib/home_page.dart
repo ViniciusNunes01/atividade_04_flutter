@@ -115,8 +115,30 @@ class _MyHomePageState extends State<MyHomePage> {
     return ((progressoDisciplinas + progressoAnotacoes) / 2).clamp(0.0, 1.0);
   }
 
+  String _mensagemGamificada() {
+    double progresso = _calcularProgresso();
+
+    if (progresso == 1.0) {
+      return '🎉 Parabéns! Você está mandando muito bem!';
+    } else if (progresso >= 0.6) {
+      return '🚀 Continue assim! Está indo muito bem!';
+    } else if (progresso >= 0.3) {
+      return '💡 Que tal adicionar mais anotações?';
+    } else {
+      return '📝 Faça mais anotações para aprender mais!';
+    }
+  }
+
+  Color _corProgresso(double valor) {
+    if (valor >= 0.6) return Colors.green;
+    if (valor >= 0.3) return Colors.orange;
+    return Colors.red;
+  }
+
   @override
   Widget build(BuildContext context) {
+    double progresso = _calcularProgresso();
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       drawer: Drawer(
@@ -195,11 +217,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     const SizedBox(height: 6),
                     LinearProgressIndicator(
-                      value: _calcularProgresso(),
+                      value: progresso,
                       minHeight: 10,
                       backgroundColor: Colors.grey[300],
-                      valueColor:
-                          const AlwaysStoppedAnimation<Color>(Colors.green),
+                      valueColor: AlwaysStoppedAnimation<Color>(_corProgresso(progresso)),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _mensagemGamificada(),
+                      style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
                     ),
                     const SizedBox(height: 20),
                     Text(
