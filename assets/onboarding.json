@@ -1,5 +1,5 @@
 [
-    {"image": "assets/images/step1.png", "title": "Bem-vindo", "desc": "Apresentação do app"},
-    {"image": "assets/images/step2.png", "title": "Funcional", "desc": "Saiba como usar"},
-    {"image": "assets/images/step3.png", "title": "Comece", "desc": "Vamos lá!"}
+    {"image": "assets/images/step1.png", "title": "Bem-vindo!", "desc": "Anotações de aulas"},
+    {"image": "assets/images/step2.png", "title": "Anotações facilitadas!", "desc": "Saiba como usar"},
+    {"image": "assets/images/step3.png", "title": "Vamos começar!", "desc": "Vamos lá!"}
 ]
